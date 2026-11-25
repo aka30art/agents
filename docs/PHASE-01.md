@@ -1,23 +1,61 @@
-# AGENT OS — Phase 01 Foundation
+# AGENT OS — Professional Specialist Prompt Library
+
+## Product definition
+AGENT OS is a local-first library of reusable professional role prompts. Each specialist profile provides a complete master prompt that the user copies into ChatGPT or another AI assistant.
+
+**AGENT OS does not run AI models, create autonomous agents, orchestrate tasks, call model APIs or require Ollama.** It is a prompt directory and management workspace. The user chooses the AI platform and controls every interaction.
 
 ## Included
-- Responsive industrial-tech command centre and navigation.
-- Dashboard metrics and six department quick-launch tiles.
-- Agent directory seeded with 14 starter specialists across six departments.
-- Search across names, descriptions, capabilities and commands.
-- Department filtering, favourites and recently opened agents.
-- Agent profile drawer with master instructions and command shortcuts.
-- Agent Workshop for creating custom agents with duplicate-name protection.
-- Prompt Vault with add, copy and remove.
-- Project overview for DOP Brand, AKASHI Art, SPECTRA TCG, SKIP HIRE TYCOON, DOWNTIME and AI Prompt Library.
-- Activity history based on recently opened profiles.
-- IndexedDB persistence for the complete local workspace.
-- Versioned JSON workspace export and restore.
-- Agent Runner with local Ollama discovery, model selection, streaming responses, cancellation, output copy/download and local execution history.
-- Automatic one-time migration of existing localStorage records into IndexedDB.
+- 160 curated specialist roles across 16 professional disciplines.
+- Search by profession, role, expertise and discipline.
+- Department filtering, favourites and recently opened specialists.
+- Complete generated master prompt for every specialist, including professional identity, expertise, operating principles, discipline-specific method, task/context placeholders and expected deliverable.
+- One-click copy of the complete specialist prompt.
+- Prompt Workshop for creating custom specialist roles and instruction sets.
+- Prompt Vault for storing, editing, copying and deleting full reusable prompt templates.
+- Project reference areas for DOP Brand, AKASHI Art, SPECTRA TCG, SKIP HIRE TYCOON, DOWNTIME and AI Prompt Library.
+- IndexedDB persistence, migration of earlier localStorage data and versioned JSON export/restore.
 
-## Run
-This is a zero-build static application. Open `index.html` in a modern browser, or serve the repository locally:
+## The 16 disciplines
+1. Strategy & Intelligence
+2. Creative & Art
+3. Graphic Design & Illustration
+4. Web & Digital Products
+5. Brand & Marketing
+6. Photography, Video & 3D
+7. Music & Audio
+8. Writing & Publishing
+9. Business & Commerce
+10. E-commerce & Retail
+11. Industrial & Operations
+12. Technology & Software
+13. AI & Automation
+14. Data & Research
+15. Education & Learning
+16. Gaming & Collectibles
+
+These categories focus on professional knowledge work and creative/technical disciplines, not manual-trade job roles.
+
+## Use
+1. Open Specialist Directory.
+2. Search or filter for the professional role you need.
+3. Open its profile and review the master prompt.
+4. Select **Copy Full Specialist Prompt**.
+5. Paste it into ChatGPT or another AI assistant.
+6. Replace the task, context and constraint placeholders with your brief.
+
+## Local data architecture
+- IndexedDB database: `agent-os-local`
+- Object store: `workspace`
+- Workspace records: specialist profiles, favourites, recent profiles and full Prompt Vault entries.
+- Existing localStorage records are migrated when the IndexedDB database is empty.
+- Earlier AGENT OS backup files remain importable.
+- JSON backups include a format identifier, schema version, export timestamp and complete local prompt library.
+
+Data stays in the browser profile. It is not synchronised between devices or uploaded to an external service. Export backups regularly.
+
+## Run locally
+Open `index.html` in a modern browser or run:
 
 ```bash
 python3 -m http.server 8000
@@ -25,37 +63,11 @@ python3 -m http.server 8000
 
 Then visit `http://localhost:8000`.
 
-## Local data architecture
-AGENT OS is local-first and does not require Supabase, a hosted database, account service or remote API.
+## Explicit exclusions
+- No autonomous agent execution.
+- No Ollama or local model runtime.
+- No hosted AI APIs or model calls.
+- No multi-agent orchestration.
+- No paid backend, database subscription or account requirement.
 
-- IndexedDB database: `agent-os-local`
-- Object store: `workspace`
-- Workspace records: agents, favourites, recent agents and prompt titles.
-- localStorage is read only as a migration source when the IndexedDB database is empty.
-- JSON backups include the workspace records, format identifier, schema version and export timestamp.
-- Restore validates the backup format and version, asks for confirmation, then replaces the current local workspace.
-
-Data remains in the browser profile on the device. It is not automatically synchronised between browsers or devices. Browser storage can be cleared, so users should export backups regularly and store them separately.
-
-## Backup and restore
-Open **Backup & Restore** from the sidebar.
-- **Download JSON backup** exports the current workspace to a dated JSON file.
-- **Choose backup file** validates and restores a previously exported AGENT OS JSON backup.
-- Restoring replaces current local workspace records. Export a backup first if you need to preserve the current state.
-
-## Local agent execution (Phase 02)
-The Agent Runner sends a specialist's role, description, capabilities, master instructions and user task to Ollama running on the same computer. It uses Ollama's local HTTP API (`/api/tags` and streaming `/api/chat`). Model discovery, streaming output, cancellation, recent-run history, copy and TXT export are included.
-
-### Setup
-1. Install Ollama on the computer that will run AGENT OS.
-2. Start Ollama and download at least one model using the Ollama application or CLI, for example `ollama pull qwen3:4b`.
-3. Open AGENT OS in a browser on that same computer. For local development, run `python3 -m http.server 8000` and open `http://localhost:8000`.
-4. Open **Agent Runner** and select **Test connection**. Choose an installed model and submit a task.
-5. If the browser reports a CORS/network error, configure Ollama's `OLLAMA_ORIGINS` environment variable to allow the exact AGENT OS browser origin (for example `http://localhost:8000` or the GitHub Pages origin), then restart Ollama. Avoid broad wildcard origins unless you understand the local security implications.
-
-The endpoint is restricted in the app to localhost/loopback addresses. Running AGENT OS on a phone while Ollama is installed on a separate computer will not work through `localhost`: localhost always refers to the device running the browser. Use the browser on the computer running Ollama.
-
-No model is bundled. Model downloads are performed directly through Ollama. Inference remains on the local machine; AGENT OS does not send prompts to a hosted AI API.
-
-## Remaining exclusions
-Multi-agent ORCHESTRA, saved workflow execution, real file uploads and persistent project rooms remain later phases. The runner executes one specialist at a time.
+AGENT OS supplies professional prompts; the user's chosen AI assistant performs the actual AI interaction.
